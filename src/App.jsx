@@ -1,7 +1,6 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import './index.css';
 import ErrorPage from './error-page';
@@ -10,11 +9,14 @@ import Home from './components/Home';
 import Base from './components/Base';
 import Toppings from './components/Toppings';
 import Order from './components/Order';
+import Modal from './components/Modal';
+
 
 function App() {
   const location = useLocation();
-
   const [pizza, setPizza] = useState({ base: '', toppings: [] });
+  const [showModal, setShowModal] = useState(false);
+
 
   const addBase = (base) => {
     setPizza({ ...pizza, base });
@@ -33,7 +35,8 @@ function App() {
   return (
     <>
       <Header />
-      <AnimatePresence>
+      <Modal  showModal={showModal} setShowModal={setShowModal} />
+      <AnimatePresence mode='wait' onExitComplete={() => setShowModal(false)}>
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Home />} />
             <Route
@@ -44,7 +47,7 @@ function App() {
               path="/toppings"
               element={<Toppings addTopping={addTopping} pizza={pizza} />}
             />
-            <Route path="/order" element={<Order pizza={pizza} />} />
+            <Route path="/order" element={<Order pizza={pizza} setShowModal={setShowModal } />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
       </AnimatePresence>
@@ -55,7 +58,7 @@ function App() {
 export default App;
 
 
-
+ 
 
 
 

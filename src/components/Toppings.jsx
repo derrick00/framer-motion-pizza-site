@@ -14,6 +14,12 @@ const containerVariants = {
       type: 'spring',
       delay:0.5
     }
+  },
+  exit: {
+    x: '-100vw',
+    transition: {
+      ease: 'easeInOut'
+    }
   }
 }
 
@@ -38,6 +44,7 @@ const Toppings = ({ addTopping, pizza }) => {
       variants={containerVariants}
       initial = "hidden"
       animate = "visible"
+      exit='exit'
       >
         
         <h3>Step 2: Choose Toppings</h3>
